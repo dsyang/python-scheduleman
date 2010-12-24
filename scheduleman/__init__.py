@@ -44,6 +44,7 @@ class ScheduleMan(object):
     def __init__(self, url=None):
         self.url=url
         self.classes = []
+        self.semester = ""
         
         if self.url is not None:
             u = urllib.urlopen(url)
@@ -60,6 +61,14 @@ class ScheduleMan(object):
                     'recitation': rec,
                 })
                 
+            semester_text = soup.find('div', 'header').find('h2').contents[0].split()
+            if semester_text[0] == 'Spring':
+                self.semester += 'S'
+            else:
+                self.semester += 'F'
+            
+            self.semester += semester_text[1]
+            
         else:
             dom = None
     
@@ -69,6 +78,15 @@ class ScheduleMan(object):
     """
     def get_url(self):
         return self.url    
+        
+        
+    """
+    ScheduleMan.get_semester(self):
+    Get semester that schedule pertains to
+    """
+    def get_semester(self):
+        return self.semester
+    
     
     """
     ScheduleMan.get_schedule(self):
@@ -124,6 +142,7 @@ class ScheduleMan(object):
     
 def main():
     sch = ScheduleMan("https://scheduleman.org/schedules/bsYn6rDO1Z")
+    print sch.get_semester()
     print sch.prettify()
     print "from", sch.get_url()
 
