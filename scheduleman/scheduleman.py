@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with python-scheduleman.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Python client library for The Tartan's ScheduleMan service.
+"""
+Python client library for The Tartan's ScheduleMan service.
 
 This client library is designed to allow read-only access and parsing of class 
 schedules generated through the ScheduleMan service, in lieu of a true API.
@@ -26,6 +27,19 @@ import urllib2 as urllib
 from BeautifulSoup import BeautifulSoup
 import re
 
+"""
+ScheduleMan class:
+Create an instance of the ScheduleMan class in order to parse a schedule
+from a URL.
+
+Note, create an instance in this manner:
+
+schedule = ScheduleMan(url)
+
+where url is the string representation of a fully-qualified URL (http:// and
+all, folks).
+
+"""
 class ScheduleMan(object):
     def __init__(self, url=None):
         self.url=url
@@ -50,14 +64,14 @@ class ScheduleMan(object):
             dom = None
     
     """
-    Schedule.get_url(self):
+    ScheduleMan.get_url(self):
     Get URL used to generate this schedule
     """
     def get_url(self):
         return self.url    
     
     """
-    Schedule.get_schedule(self):
+    ScheduleMan.get_schedule(self):
     Get list of dictionaries, one for each class, with following format:
         name: name of class
         number: class number
@@ -67,7 +81,7 @@ class ScheduleMan(object):
         return self.classes
 
     """
-    Schedule.get_numbers(self):
+    ScheduleMan.get_numbers(self):
     Get list of class numbers in this schedule
     """
     def get_numbers(self):
@@ -77,7 +91,7 @@ class ScheduleMan(object):
         
         
     """
-    Schedule.get_class(self, number):
+    ScheduleMan.get_class(self, number):
     Get dictionary for the class with the number given as `number`
     """
     def get_class(self, number):
@@ -87,21 +101,21 @@ class ScheduleMan(object):
         return {}
     
     """
-    Schedule.get_name(self, number):
+    ScheduleMan.get_name(self, number):
     Get verbose name of class with given number
     """
     def get_name(self, number):
         return self.get_class(number).get('name')
     
     """
-    Schedule.get_recitation(self, number):
+    ScheduleMan.get_recitation(self, number):
     Get recitation of class with given number
     """
     def get_recitation(self, number):
         return self.get_class(number).get('recitation')
     
     """
-    Schedule.prettify(self):
+    ScheduleMan.prettify(self):
     Get human-readable schedule string
     """
     def prettify(self):
