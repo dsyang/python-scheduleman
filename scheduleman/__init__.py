@@ -18,7 +18,6 @@
 # along with python-scheduleman.  If not, see <http://www.gnu.org/licenses/>.
 
 import urllib2 as urllib
-import string
 import re
 
 """
@@ -40,7 +39,7 @@ class ScheduleMan(object):
         self.classes = []
         self.semester = None
         strip_chars = ' \t\n\r\0\x0B\"'
-        if self.url is not None:
+        if self.url is not (None or ''):
             u = urllib.urlopen(url+ '.ics')
             
             #parsing keywords
@@ -148,12 +147,12 @@ class ScheduleMan(object):
                            cls.get('name') for cls in self.get_schedule()])
     
 def main(url):
+    if url=='': url = "https://scheduleman.org/schedules/bsYn6rDO1Z"
     sch = ScheduleMan(url)
     print sch.get_semester()
     print sch.prettify()
     print "from", sch.get_url()
 
 if __name__ == '__main__':
-    url = "https://scheduleman.org/schedules/bsYn6rDO1Z"
     url = raw_input( "Schedulman URL:")
     main(url)
